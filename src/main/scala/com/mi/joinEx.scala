@@ -17,9 +17,6 @@ object joinEx {
     var subData = spark.read.format("csv").
       option("header", "true").load(dataPath + subFile)
 
-
-
-
     mainData.createOrReplaceTempView("maindata")
     subData.createOrReplaceTempView("subdata")
 
@@ -92,6 +89,29 @@ object joinEx {
 
     println(innerJoinDataEx.count)
     println(leftJoinDataEx.count)
-  }
 
+
+    // data save
+    // 데이터베이스 주소 및 접속정보 설정
+    var myUrl = "jdbc:oracle:thin:@192.168.110.25:1521/XE"
+
+    // 데이터 저장
+    val prop = new java.util.Properties
+    prop.setProperty("driver", "oracle.jdbc.OracleDriver")
+    prop.setProperty("user", "kopo")
+    prop.setProperty("password", "kopo")
+    val table = "test1"
+    //append
+    //selloutDataFromOracle.write.mode("overwrite").jdbc(myUrl, table, prop)
+
+
+    // 파일저장
+    //selloutDataFromOracle.
+      //coalesce(1). // 파일개수
+      //write.format("csv").  // 저장포맷
+      //mode("overwrite"). // 저장모드 append/overwrite
+      //option("header", "true"). // 헤더 유/무
+      //save("d:/savedData2/selloutDataFromOracle.csv") // 저장파일명
+
+  }
 }
